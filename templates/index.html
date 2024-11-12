@@ -1,0 +1,22 @@
+                        document.getElementById('copyBtn').style.display = 'block';
+                        document.getElementById('copyBtn').dataset.link = data.link;
+                    } else {
+                        document.getElementById('errorMessage').style.display = 'block';
+                        document.getElementById('successMessage').style.display = 'none';
+                        document.getElementById('errorMessage').textContent = data.error;
+                    }
+                }, 5000);  // Simulate delay for loader (5 seconds)
+            });
+        }
+
+        function copyToClipboard() {
+            var link = document.getElementById('copyBtn').dataset.link;
+            navigator.clipboard.writeText(link).then(function() {
+                alert('Link copied to clipboard!');
+            }, function(err) {
+                alert('Error copying link: ' + err);
+            });
+        }
+    </script>
+</body>
+</html>
