@@ -1,3 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Link Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #2c3e50;
+            color: #ecf0f1;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #34495e;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1abc9c;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin: 15px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #ecf0f1;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #1abc9c;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #16a085;
+        }
+
+        .result, .error {
+            margin-top: 20px;
+            padding: 10px;
+            color: #fff;
+            display: none;
+            word-wrap: break-word;
+        }
+
+        .result {
+            background-color: #2ecc71;
+        }
+
+        .error {
+            background-color: #e74c3c;
+        }
+
+        .loader {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .copy-btn {
+            display: none;
+            padding: 10px 20px;
+            background-color: #2980b9;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            background-color: #1c598a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Survey Link Generator</h1>
+        <input type="text" id="hostName" placeholder="Enter Host Name (e.g. typeform)">
+        <button onclick="generateLink()">Generate Link</button>
+        
+        <!-- Loader -->
+        <div id="loader" class="loader"></div>
+
+        <!-- Success and Error messages -->
+        <div id="successMessage" class="result"></div>
+        <div id="errorMessage" class="error"></div>
+
+        <!-- Copy to Clipboard Button -->
+        <button id="copyBtn" class="copy-btn" onclick="copyToClipboard()">Copy to Clipboard</button>
+    </div>
+
+    <script>
+        function generateLink() {
+            var hostName = document.getElementById('hostName').value;
+
+            // Show loader and hide result/error
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('copyBtn').style.display = 'none';
+
+            fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ hostName: hostName })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide loader after 5 seconds delay
+                setTimeout(function() {
+                    document.getElementById('loader').style.display = 'none';
+
+                    if (data.success) {
+                        document.getElementById('successMessage').style.display = 'block';
+                        document.getElementById('errorMessage').style.display = 'none';
+                        document.getElementById('successMessage').textContent = 'Generated Link: ' + data.link;
+
+                        // Show copy button
                         document.getElementById('copyBtn').style.display = 'block';
                         document.getElementById('copyBtn').dataset.link = data.link;
                     } else {
