@@ -34,8 +34,8 @@ def generate_link():
     data = request.get_json()
     host_name = data.get('hostName').lower()
 
-    # Remove 'https://' or 'http://' prefix and extract only domain
-    normalized_host_name = re.sub(r'^https?://', '', host_name).split('/')[0]
+    # Remove 'https://' or 'http://' prefix from the host_name
+    normalized_host_name = re.sub(r'^https?://', '', host_name)
 
     if normalized_host_name in host_links:
         link = host_links[normalized_host_name]
