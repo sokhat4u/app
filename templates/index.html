@@ -304,29 +304,36 @@
     <script>
         function generateLink() {
             var hostName = document.getElementById('hostName').value;
-
-            // Show loader and hide other elements
+            
+            // Loader show karen
             document.getElementById('loader').style.display = 'block';
             document.getElementById('successMessage').style.display = 'none';
             document.getElementById('errorMessage').style.display = 'none';
             document.getElementById('copyBtn').style.display = 'none';
             document.getElementById('successCheckmark').style.display = 'none';
 
-            fetch('/generate', {
+            // Current website ka domain get karen
+            const currentDomain = window.location.origin;
+
+            // API call karen with full URL
+            fetch(`${currentDomain}/generate`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ hostName: hostName })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
-                // Hide loader after 3 seconds delay
                 setTimeout(function() {
                     document.getElementById('loader').style.display = 'none';
 
                     if (data.success) {
-                        // Show success checkmark
                         document.getElementById('successCheckmark').style.display = 'block';
                         
                         setTimeout(function() {
@@ -342,6 +349,12 @@
                         document.getElementById('errorMessage').textContent = data.error;
                     }
                 }, 3000);
+            })
+            .catch(error => {
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('errorMessage').textContent = 'Error: Link generate nahi ho saka. Please dubara try karen.';
+                console.error('Error:', error);
             });
         }
 
