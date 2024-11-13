@@ -1,6 +1,4 @@
 from flask import Flask, render_template, request, jsonify
-import random
-import string
 import re
 
 app = Flask(__name__)
@@ -36,8 +34,8 @@ def generate_link():
     data = request.get_json()
     host_name = data.get('hostName').lower()
 
-    # Remove 'https://' or 'http://' prefix from the host_name
-    normalized_host_name = re.sub(r'^https?://', '', host_name)
+    # Remove 'https://' or 'http://' prefix and extract only domain
+    normalized_host_name = re.sub(r'^https?://', '', host_name).split('/')[0]
 
     if normalized_host_name in host_links:
         link = host_links[normalized_host_name]
@@ -52,4 +50,3 @@ def generate_link():
 
 if __name__ == '__main__':
     app.run(debug=True)
-    
