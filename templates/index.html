@@ -3,111 +3,295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Survey Link Generator</title>
+    <title>3D Survey Link Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #00FF00;
+            --secondary-color: #ff00ff;
+            --background-dark: #111111;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #2c3e50;
-            color: #ecf0f1;
+            font-family: 'Press Start 2P', monospace;
             margin: 0;
             padding: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            background: radial-gradient(circle at center, #222222, #000000);
+            color: #ffffff;
+            perspective: 1000px;
         }
 
         .container {
-            background: #34495e;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-            width: 400px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+            width: 90%;
+            max-width: 500px;
             text-align: center;
+            border: 5px solid var(--primary-color);
+            position: relative;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 20px;
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.5;
+            animation: borderGlow 3s ease-in-out infinite alternate;
         }
 
         h1 {
-            color: #1abc9c;
+            font-size: 3rem;
+            background: linear-gradient(45deg, #ff007f, #00ffff, #ff6600);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: 5px;
+            text-shadow: 0 0 20px rgba(255, 0, 127, 0.7);
+            animation: textFloat 4s ease-in-out infinite;
+            transform-style: preserve-3d;
         }
 
         input[type="text"] {
             width: 80%;
-            padding: 10px;
-            margin: 15px 0;
+            padding: 20px;
+            margin: 20px 0;
             border: none;
-            border-radius: 5px;
-            background-color: #ecf0f1;
+            border-radius: 10px;
+            background-color: rgba(34, 34, 34, 0.9);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            border: 2px solid var(--primary-color);
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
         }
 
-        button {
-            padding: 10px 20px;
+        input[type="text"]:focus {
+            transform: translateZ(20px);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+            outline: none;
+        }
+
+        .generate-btn {
+            padding: 20px 40px;
             border: none;
-            background-color: #1abc9c;
-            color: white;
-            border-radius: 5px;
+            background: linear-gradient(45deg, var(--primary-color), #00AA00);
+            color: black;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background 0.3s;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 15px;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
         }
 
-        button:hover {
-            background-color: #16a085;
+        .generate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
         }
 
-        .result, .error {
-            margin-top: 20px;
-            padding: 10px;
-            color: #fff;
-            display: none;
-            word-wrap: break-word;
+        .generate-btn:hover::before {
+            left: 100%;
         }
 
-        .result {
-            background-color: #2ecc71;
-        }
-
-        .error {
-            background-color: #e74c3c;
+        .generate-btn:hover {
+            transform: translateZ(30px) scale(1.05);
+            box-shadow: 0 0 30px var(--primary-color);
         }
 
         .loader {
             display: none;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 40px;
+            position: relative;
+            width: 100%;
             height: 40px;
-            animation: spin 2s linear infinite;
-            margin: 20px auto;
+            margin-top: 30px;
+            perspective: 1000px;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .cube {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            left: 50%;
+            margin-left: -20px;
+            transform-style: preserve-3d;
+            animation: cube-spin 2s infinite linear;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border: 2px solid rgba(0, 255, 0, 0.3);
+            opacity: 0.8;
+        }
+
+        .front  { transform: translateZ(20px); }
+        .back   { transform: rotateY(180deg) translateZ(20px); }
+        .right  { transform: rotateY(90deg) translateZ(20px); }
+        .left   { transform: rotateY(-90deg) translateZ(20px); }
+        .top    { transform: rotateX(90deg) translateZ(20px); }
+        .bottom { transform: rotateX(-90deg) translateZ(20px); }
+
+        .result, .error {
+            margin-top: 20px;
+            padding: 20px;
+            color: #fff;
+            display: none;
+            word-wrap: break-word;
+            font-family: 'Press Start 2P', monospace;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 10px;
+            border: 2px solid var(--primary-color);
+            transform-style: preserve-3d;
+            animation: resultAppear 0.5s ease-out;
+        }
+
+        .error {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
         }
 
         .copy-btn {
             display: none;
-            padding: 10px 20px;
-            background-color: #2980b9;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, var(--secondary-color), #b300b3);
             color: white;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            width: 100%;
+            transform-style: preserve-3d;
         }
 
         .copy-btn:hover {
-            background-color: #1c598a;
+            transform: translateZ(20px) scale(1.05);
+            box-shadow: 0 0 20px var(--secondary-color);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotateX(0) rotateY(0); }
+            25% { transform: translateY(-10px) rotateX(2deg) rotateY(2deg); }
+            75% { transform: translateY(10px) rotateX(-2deg) rotateY(-2deg); }
+        }
+
+        @keyframes textFloat {
+            0%, 100% { transform: translateZ(0); }
+            50% { transform: translateZ(30px); }
+        }
+
+        @keyframes borderGlow {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        @keyframes cube-spin {
+            0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
+            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+        }
+
+        @keyframes resultAppear {
+            0% { transform: translateZ(-50px); opacity: 0; }
+            100% { transform: translateZ(0); opacity: 1; }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            input[type="text"] {
+                width: 90%;
+                padding: 15px;
+            }
+
+            .generate-btn {
+                font-size: 1.2rem;
+                padding: 15px 30px;
+            }
+
+            .cube {
+                width: 30px;
+                height: 30px;
+                margin-left: -15px;
+            }
+
+            .cube-face {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        /* Success Animation */
+        .success-checkmark {
+            display: none;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            animation: checkmark 0.5s ease-in-out;
+        }
+
+        @keyframes checkmark {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Survey Link Generator</h1>
-        <input type="text" id="hostName" placeholder="Enter Host Name (e.g. typeform)">
-        <button onclick="generateLink()">Generate Link</button>
-        
-        <!-- Loader -->
-        <div id="loader" class="loader"></div>
+        <input type="text" id="hostName" placeholder="Enter Host Name">
+        <button class="generate-btn" onclick="generateLink()">Generate Link</button>
+
+        <!-- 3D Cube Loader -->
+        <div id="loader" class="loader">
+            <div class="cube">
+                <div class="cube-face front"></div>
+                <div class="cube-face back"></div>
+                <div class="cube-face right"></div>
+                <div class="cube-face left"></div>
+                <div class="cube-face top"></div>
+                <div class="cube-face bottom"></div>
+            </div>
+        </div>
+
+        <!-- Success Checkmark -->
+        <div id="successCheckmark" class="success-checkmark">
+            <svg width="80" height="80" viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="35" fill="none" stroke="#00FF00" stroke-width="5"/>
+                <path d="M25 40 L35 50 L55 30" fill="none" stroke="#00FF00" stroke-width="5"/>
+            </svg>
+        </div>
 
         <!-- Success and Error messages -->
         <div id="successMessage" class="result"></div>
@@ -121,11 +305,12 @@
         function generateLink() {
             var hostName = document.getElementById('hostName').value;
 
-            // Show loader and hide result/error
+            // Show loader and hide other elements
             document.getElementById('loader').style.display = 'block';
             document.getElementById('successMessage').style.display = 'none';
             document.getElementById('errorMessage').style.display = 'none';
             document.getElementById('copyBtn').style.display = 'none';
+            document.getElementById('successCheckmark').style.display = 'none';
 
             fetch('/generate', {
                 method: 'POST',
@@ -136,35 +321,54 @@
             })
             .then(response => response.json())
             .then(data => {
-                // Hide loader after 5 seconds delay
+                // Hide loader after 3 seconds delay
                 setTimeout(function() {
                     document.getElementById('loader').style.display = 'none';
 
                     if (data.success) {
-                        document.getElementById('successMessage').style.display = 'block';
-                        document.getElementById('errorMessage').style.display = 'none';
-                        document.getElementById('successMessage').textContent = 'Generated Link: ' + data.link;
-
-                        // Show copy button
-                        document.getElementById('copyBtn').style.display = 'block';
-                        document.getElementById('copyBtn').dataset.link = data.link;
+                        // Show success checkmark
+                        document.getElementById('successCheckmark').style.display = 'block';
+                        
+                        setTimeout(function() {
+                            document.getElementById('successCheckmark').style.display = 'none';
+                            document.getElementById('successMessage').style.display = 'block';
+                            document.getElementById('successMessage').textContent = 'Generated Link: ' + data.link;
+                            document.getElementById('copyBtn').style.display = 'block';
+                            document.getElementById('copyBtn').dataset.link = data.link;
+                        }, 1000);
                     } else {
                         document.getElementById('errorMessage').style.display = 'block';
                         document.getElementById('successMessage').style.display = 'none';
                         document.getElementById('errorMessage').textContent = data.error;
                     }
-                }, 5000);  // Simulate delay for loader (5 seconds)
+                }, 3000);
             });
         }
 
         function copyToClipboard() {
             var link = document.getElementById('copyBtn').dataset.link;
             navigator.clipboard.writeText(link).then(function() {
-                alert('Link copied to clipboard!');
+                const copyBtn = document.getElementById('copyBtn');
+                copyBtn.textContent = 'Copied!';
+                copyBtn.style.background = 'linear-gradient(45deg, #00FF00, #00AA00)';
+                
+                setTimeout(() => {
+                    copyBtn.textContent = 'Copy to Clipboard';
+                    copyBtn.style.background = 'linear-gradient(45deg, var(--secondary-color), #b300b3)';
+                }, 2000);
             }, function(err) {
                 alert('Error copying link: ' + err);
             });
         }
+
+        // Add hover effect to input
+        const input = document.getElementById('hostName');
+        input.addEventListener('mouseover', () => {
+            input.style.transform = 'translateZ(10px)';
+        });
+        input.addEventListener('mouseout', () => {
+            input.style.transform = 'translateZ(0)';
+        });
     </script>
 </body>
 </html>
