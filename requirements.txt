@@ -57,4 +57,4 @@ websocket-client==1.8.0
 Werkzeug==3.0.6
 wikipedia==1.4.0
 wsproto==1.2.0
-Flask==3.0.3
+Flask==2.2.2
