@@ -19,7 +19,7 @@ host_links = {
     'brandresearch.qualtrics.com': 'https://notch.insights.supply/cb?token=0d0dc9e7-9541-4365-b4b2-b9522e4a21a7&RID=',
     'surveys.sago.com': 'https://notch.insights.supply/cb?token=312ef1b8-f520-4c8e-b19f-57d47ded4a9d&RID=',
     'us1se.voxco.com': 'https://notch.insights.supply/cb?token=d9af61cb-78d3-401d-93c1-d2ce388a8cd4&RID=',
-    'singapore.decipherinc.com@spectrum': 'https://spectrumsurveys.com/surveydone?st=21&transaction_id=xxxxx&_k=2&_s=5b27d44e96894cf1c161e9636496d31c8debaffa
+    'singapore.decipherinc.com@spectrum': 'https://spectrumsurveys.com/surveydone?st=21&transaction_id=xxxxx&_k=2&_s=5b27d44e96894cf1c161e9636496d31c8debaffa',
 }
 
 # Function to save unknown host names
