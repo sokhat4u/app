@@ -3,104 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Survey Link Generator</title>
+    <title>Survey Link Generator</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #00FF00;
-            --secondary-color: #ff00ff;
-            --background-dark: #111111;
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --accent-color: #9C27B0;
+            --background-dark: #1a1a1a;
+            --text-color: #ffffff;
         }
 
         body {
             font-family: 'Press Start 2P', monospace;
             margin: 0;
             padding: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle at center, #222222, #000000);
-            color: #ffffff;
-            perspective: 1000px;
+            background: var(--background-dark);
+            color: var(--text-color);
         }
 
         .container {
             background: rgba(0, 0, 0, 0.8);
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             width: 90%;
             max-width: 500px;
             text-align: center;
-            border: 5px solid var(--primary-color);
+            border: 3px solid var(--primary-color);
             position: relative;
             transform-style: preserve-3d;
-            animation: float 6s ease-in-out infinite;
+            animation: containerFloat 8s ease-in-out infinite;
         }
 
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            border-radius: 20px;
-            z-index: -1;
-            filter: blur(20px);
-            opacity: 0.5;
-            animation: borderGlow 3s ease-in-out infinite alternate;
+        @keyframes containerFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         h1 {
-            font-size: 3rem;
-            background: linear-gradient(45deg, #ff007f, #00ffff, #ff6600);
-            background-clip: text;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
+            background-clip: text;
             color: transparent;
-            letter-spacing: 5px;
-            text-shadow: 0 0 20px rgba(255, 0, 127, 0.7);
-            animation: textFloat 4s ease-in-out infinite;
-            transform-style: preserve-3d;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         input[type="text"] {
             width: 80%;
-            padding: 20px;
+            padding: 15px;
             margin: 20px 0;
-            border: none;
-            border-radius: 10px;
-            background-color: rgba(34, 34, 34, 0.9);
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
             border: 2px solid var(--primary-color);
-            transform-style: preserve-3d;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            font-size: 1rem;
             transition: all 0.3s ease;
         }
 
         input[type="text"]:focus {
-            transform: translateZ(20px);
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
             outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 15px rgba(33, 150, 243, 0.3);
         }
 
         .generate-btn {
-            padding: 20px 40px;
+            padding: 15px 30px;
             border: none;
-            background: linear-gradient(45deg, var(--primary-color), #00AA00);
-            color: black;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: bold;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
-            transition: all 0.3s ease;
-            width: 100%;
-            margin-top: 15px;
-            transform-style: preserve-3d;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             overflow: hidden;
         }
@@ -113,157 +95,133 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
+            animation: shimmer 2s infinite;
         }
 
-        .generate-btn:hover::before {
-            left: 100%;
+        @keyframes shimmer {
+            100% { left: 100%; }
         }
 
         .generate-btn:hover {
-            transform: translateZ(30px) scale(1.05);
-            box-shadow: 0 0 30px var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .generate-btn:active {
+            transform: translateY(0);
         }
 
         .loader {
             display: none;
+            margin: 20px auto;
             position: relative;
-            width: 100%;
-            height: 40px;
-            margin-top: 30px;
-            perspective: 1000px;
+            width: 60px;
+            height: 60px;
         }
 
-        .cube {
-            width: 40px;
-            height: 40px;
+        .loader-ring {
             position: absolute;
-            left: 50%;
-            margin-left: -20px;
-            transform-style: preserve-3d;
-            animation: cube-spin 2s infinite linear;
-        }
-
-        .cube-face {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: var(--primary-color);
-            border: 2px solid rgba(0, 255, 0, 0.3);
-            opacity: 0.8;
-        }
-
-        .front  { transform: translateZ(20px); }
-        .back   { transform: rotateY(180deg) translateZ(20px); }
-        .right  { transform: rotateY(90deg) translateZ(20px); }
-        .left   { transform: rotateY(-90deg) translateZ(20px); }
-        .top    { transform: rotateX(90deg) translateZ(20px); }
-        .bottom { transform: rotateX(-90deg) translateZ(20px); }
-
-        .result, .error {
-            margin-top: 20px;
-            padding: 20px;
-            color: #fff;
-            display: none;
-            word-wrap: break-word;
-            font-family: 'Press Start 2P', monospace;
-            background: rgba(0, 255, 0, 0.1);
-            border-radius: 10px;
-            border: 2px solid var(--primary-color);
-            transform-style: preserve-3d;
-            animation: resultAppear 0.5s ease-out;
-        }
-
-        .error {
-            background: rgba(255, 0, 0, 0.1);
-            border: 2px solid #ff0000;
-        }
-
-        .copy-btn {
-            display: none;
-            padding: 15px 30px;
-            background: linear-gradient(45deg, var(--secondary-color), #b300b3);
-            color: white;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.3s ease;
             width: 100%;
-            transform-style: preserve-3d;
+            height: 100%;
+            border: 4px solid transparent;
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
-        .copy-btn:hover {
-            transform: translateZ(20px) scale(1.05);
-            box-shadow: 0 0 20px var(--secondary-color);
+        .loader-ring:nth-child(2) {
+            border-top-color: var(--secondary-color);
+            animation-delay: 0.3s;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotateX(0) rotateY(0); }
-            25% { transform: translateY(-10px) rotateX(2deg) rotateY(2deg); }
-            75% { transform: translateY(10px) rotateX(-2deg) rotateY(-2deg); }
+        .loader-ring:nth-child(3) {
+            border-top-color: var(--accent-color);
+            animation-delay: 0.6s;
         }
 
-        @keyframes textFloat {
-            0%, 100% { transform: translateZ(0); }
-            50% { transform: translateZ(30px); }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        @keyframes borderGlow {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.7; }
-        }
-
-        @keyframes cube-spin {
-            0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
-            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
-        }
-
-        @keyframes resultAppear {
-            0% { transform: translateZ(-50px); opacity: 0; }
-            100% { transform: translateZ(0); opacity: 1; }
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            input[type="text"] {
-                width: 90%;
-                padding: 15px;
-            }
-
-            .generate-btn {
-                font-size: 1.2rem;
-                padding: 15px 30px;
-            }
-
-            .cube {
-                width: 30px;
-                height: 30px;
-                margin-left: -15px;
-            }
-
-            .cube-face {
-                width: 30px;
-                height: 30px;
-            }
-        }
-
-        /* Success Animation */
         .success-checkmark {
             display: none;
-            width: 80px;
-            height: 80px;
-            margin: 0 auto;
-            animation: checkmark 0.5s ease-in-out;
+            width: 60px;
+            height: 60px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .success-checkmark svg {
+            animation: checkmark 0.5s ease-in-out forwards;
         }
 
         @keyframes checkmark {
             0% { transform: scale(0); }
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
+        }
+
+        .result, .error {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .result {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid var(--primary-color);
+        }
+
+        .error {
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid #f44336;
+        }
+
+        .result.show, .error.show {
+            opacity: 1;
+        }
+
+        .copy-btn {
+            display: none;
+            padding: 12px 24px;
+            margin-top: 15px;
+            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            input[type="text"] {
+                width: 90%;
+                font-size: 0.9rem;
+            }
+
+            .generate-btn {
+                font-size: 1rem;
+                padding: 12px 24px;
+            }
         }
     </style>
 </head>
@@ -273,49 +231,42 @@
         <input type="text" id="hostName" placeholder="Enter Host Name">
         <button class="generate-btn" onclick="generateLink()">Generate Link</button>
 
-        <!-- 3D Cube Loader -->
         <div id="loader" class="loader">
-            <div class="cube">
-                <div class="cube-face front"></div>
-                <div class="cube-face back"></div>
-                <div class="cube-face right"></div>
-                <div class="cube-face left"></div>
-                <div class="cube-face top"></div>
-                <div class="cube-face bottom"></div>
-            </div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
         </div>
 
-        <!-- Success Checkmark -->
         <div id="successCheckmark" class="success-checkmark">
-            <svg width="80" height="80" viewBox="0 0 80 80">
-                <circle cx="40" cy="40" r="35" fill="none" stroke="#00FF00" stroke-width="5"/>
-                <path d="M25 40 L35 50 L55 30" fill="none" stroke="#00FF00" stroke-width="5"/>
+            <svg width="60" height="60" viewBox="0 0 60 60">
+                <circle cx="30" cy="30" r="25" fill="none" stroke="#4CAF50" stroke-width="3"/>
+                <path d="M20 30L27 37L40 24" fill="none" stroke="#4CAF50" stroke-width="3"/>
             </svg>
         </div>
 
-        <!-- Success and Error messages -->
         <div id="successMessage" class="result"></div>
         <div id="errorMessage" class="error"></div>
-
-        <!-- Copy to Clipboard Button -->
         <button id="copyBtn" class="copy-btn" onclick="copyToClipboard()">Copy to Clipboard</button>
     </div>
 
     <script>
         function generateLink() {
-            var hostName = document.getElementById('hostName').value;
-            
-            // Loader show karen
-            document.getElementById('loader').style.display = 'block';
-            document.getElementById('successMessage').style.display = 'none';
-            document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('copyBtn').style.display = 'none';
-            document.getElementById('successCheckmark').style.display = 'none';
+            const loader = document.getElementById('loader');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            const copyBtn = document.getElementById('copyBtn');
+            const successCheckmark = document.getElementById('successCheckmark');
+            const hostName = document.getElementById('hostName').value;
 
-            // Current website ka domain get karen
+            // Reset displays
+            loader.style.display = 'block';
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            copyBtn.style.display = 'none';
+            successCheckmark.style.display = 'none';
+
             const currentDomain = window.location.origin;
 
-            // API call karen with full URL
             fetch(`${currentDomain}/generate`, {
                 method: 'POST',
                 headers: {
@@ -324,64 +275,59 @@
                 body: JSON.stringify({ hostName: hostName })
             })
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
+                if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();
             })
             .then(data => {
-                setTimeout(function() {
-                    document.getElementById('loader').style.display = 'none';
-
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    
                     if (data.success) {
-                        document.getElementById('successCheckmark').style.display = 'block';
+                        successCheckmark.style.display = 'block';
                         
-                        setTimeout(function() {
-                            document.getElementById('successCheckmark').style.display = 'none';
-                            document.getElementById('successMessage').style.display = 'block';
-                            document.getElementById('successMessage').textContent = 'Generated Link: ' + data.link;
-                            document.getElementById('copyBtn').style.display = 'block';
-                            document.getElementById('copyBtn').dataset.link = data.link;
+                        setTimeout(() => {
+                            successCheckmark.style.display = 'none';
+                            successMessage.style.display = 'block';
+                            successMessage.textContent = 'Generated Link: ' + data.link;
+                            successMessage.classList.add('show');
+                            copyBtn.style.display = 'block';
+                            copyBtn.dataset.link = data.link;
                         }, 1000);
                     } else {
-                        document.getElementById('errorMessage').style.display = 'block';
-                        document.getElementById('successMessage').style.display = 'none';
-                        document.getElementById('errorMessage').textContent = data.error;
+                        errorMessage.style.display = 'block';
+                        errorMessage.textContent = data.error;
+                        errorMessage.classList.add('show');
                     }
-                }, 3000);
+                }, 2000);
             })
             .catch(error => {
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('errorMessage').style.display = 'block';
-                document.getElementById('errorMessage').textContent = 'Error: Link generate nahi ho saka. Please dubara try karen.';
+                loader.style.display = 'none';
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = 'Error: Could not generate link. Please try again.';
+                errorMessage.classList.add('show');
                 console.error('Error:', error);
             });
         }
 
         function copyToClipboard() {
-            var link = document.getElementById('copyBtn').dataset.link;
-            navigator.clipboard.writeText(link).then(function() {
-                const copyBtn = document.getElementById('copyBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const link = copyBtn.dataset.link;
+            
+            navigator.clipboard.writeText(link).then(() => {
+                const originalText = copyBtn.textContent;
+                const originalBackground = copyBtn.style.background;
+                
                 copyBtn.textContent = 'Copied!';
-                copyBtn.style.background = 'linear-gradient(45deg, #00FF00, #00AA00)';
+                copyBtn.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
                 
                 setTimeout(() => {
-                    copyBtn.textContent = 'Copy to Clipboard';
-                    copyBtn.style.background = 'linear-gradient(45deg, var(--secondary-color), #b300b3)';
+                    copyBtn.textContent = originalText;
+                    copyBtn.style.background = originalBackground;
                 }, 2000);
-            }, function(err) {
+            }).catch(err => {
                 alert('Error copying link: ' + err);
             });
         }
-
-        // Add hover effect to input
-        const input = document.getElementById('hostName');
-        input.addEventListener('mouseover', () => {
-            input.style.transform = 'translateZ(10px)';
-        });
-        input.addEventListener('mouseout', () => {
-            input.style.transform = 'translateZ(0)';
-        });
     </script>
 </body>
 </html>
