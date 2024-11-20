@@ -28,7 +28,7 @@ host_links = {
     'surveys.irbureau.com': 'https://surveys.irbureau.com/panelistResponse?panelistResponse=103&rid=40979_ldhkhdplabipevoj_83',
     'research3.ipsosinteractive.com': 'https://dkr1.ssisurveys.com/projects/end?rst=1&psid=GlgtvJBILTIbJAXQvF-45Q',
     'surveysconnect.co.uk': 'https://notch.insights.supply/cb?token=68f41caf-9154-4775-991e-9f1e08ec325c&RID=',
-    'web.appin.io@cint: 'https://s.cint.com/survey/return/62465b1f-4832-aab7-5c8b-6f6dd0d86995',
+    'web.appin.io@cint': 'https://s.cint.com/survey/return/62465b1f-4832-aab7-5c8b-6f6dd0d86995',
     'welcome.walr.com@spectrum': 'https://spectrumsurveys.com/surveydone?st=21&transaction_id=',
     'emea.focusvision.com@spectrum': 'https://spectrumsurveys.com/surveydone?st=21&transaction_id=xxxxx&ps_hash=2zh4imSX',
     
