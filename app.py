@@ -20,6 +20,18 @@ host_links = {
     'surveys.sago.com': 'https://notch.insights.supply/cb?token=312ef1b8-f520-4c8e-b19f-57d47ded4a9d&RID=',
     'us1se.voxco.com': 'https://notch.insights.supply/cb?token=d9af61cb-78d3-401d-93c1-d2ce388a8cd4&RID=',
     'singapore.decipherinc.com@spectrum': 'https://spectrumsurveys.com/surveydone?st=21&transaction_id=xxxxx&_k=2&_s=5b27d44e96894cf1c161e9636496d31c8debaffa',
+    'sname': 'http://ups.surveyrouter.com/trafficui/mscui/SOQualified.aspx?sname=xxxx&TolunaEnc=4797&gid=xxxx',
+    'no.surveymonkey.com': 'https://notch.insights.supply/cb?token=c7953959-d9a1-415b-a915-f15d2809d172&RID=',
+    'survey.euro.confirmit.com@cint': 'https://s.cint.com/Survey/Complete?ProjectToken=fd0efe92-64c8-4fbc-a8c8-95d645101131',
+    'redi.jtnpanel.com': 'https://notch.insights.supply/cb?token=716f0844-801e-48b4-b285-9f445577523f&RID=',
+    'waler': 'https://notch.insights.supply/cb?token=288a1257-09e2-43e3-8765-e0c35d1affad&RID=',
+    'surveys.irbureau.com': 'https://surveys.irbureau.com/panelistResponse?panelistResponse=103&rid=40979_ldhkhdplabipevoj_83',
+    'research3.ipsosinteractive.com': 'https://dkr1.ssisurveys.com/projects/end?rst=1&psid=GlgtvJBILTIbJAXQvF-45Q',
+    'surveysconnect.co.uk': 'https://notch.insights.supply/cb?token=68f41caf-9154-4775-991e-9f1e08ec325c&RID=',
+    'web.appin.io@cint: 'https://s.cint.com/survey/return/62465b1f-4832-aab7-5c8b-6f6dd0d86995',
+    'welcome.walr.com@spectrum': 'https://spectrumsurveys.com/surveydone?st=21&transaction_id=',
+    'emea.focusvision.com@spectrum': 'https://spectrumsurveys.com/surveydone?st=21&transaction_id=xxxxx&ps_hash=2zh4imSX',
+    
 }
 
 # Function to save unknown host names
