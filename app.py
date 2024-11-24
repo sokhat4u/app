@@ -49,7 +49,7 @@ host_links = {
     'd8aspring.post-survey.com': 'https://notch.insights.supply/cb?token=92c87706-ecaf-4cc4-8456-9108b01a85e5&RID=',
     'surveys.ovationworldpanel.com': 'https://notch.insights.supply/cb?token=04651664-4715-4620-8f59-16a272ff3e4a&pid1=xxxxxxxxx&refid1=xxxxxxx&rid=xxxxxxxxx',
     'as-c1-web01.opinion.life': 'https://notch.insights.supply/cb?token=e770d4e9-3b78-4326-a3fa-f314983fb33d&RID=',
-    'panel144.panelpulse.com': 'https://notch.insights.supply/cb?token=38de98e5-ebe9-4a7e-b81b-87ecb629cff9&RID='
+    'panel144.panelpulse.com': 'https://notch.insights.supply/cb?token=38de98e5-ebe9-4a7e-b81b-87ecb629cff9&RID=',
     'survey.gavenze.com': 'https://notch.insights.supply/cb?token=6b8f8e7d-d27b-42f7-97f0-c1d5c51c6b67&RID=',
     'survey.researchautomators.se@cint': 'https://s.cint.com/Survey/Complete?ProjectToken=6aea9a90-7b3f-44bd-b0cb-ba0230b89538',
     'ups.surveyrouter.com@dkr': 'https://dkr1.ssisurveys.com/projects/end?rst=1&psid=P8dN_J4AWZigcx6mO4yQRg**&_k=1093&_s=38ef669880776bde376c6b370caf1d823ac0b1e867844d00b1dd56177a08d2cb',
