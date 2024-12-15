@@ -54,6 +54,24 @@ host_links = {
     'survey.researchautomators.se@cint': 'https://s.cint.com/Survey/Complete?ProjectToken=6aea9a90-7b3f-44bd-b0cb-ba0230b89538',
     'ups.surveyrouter.com@dkr': 'https://dkr1.ssisurveys.com/projects/end?rst=1&psid=P8dN_J4AWZigcx6mO4yQRg**&_k=1093&_s=38ef669880776bde376c6b370caf1d823ac0b1e867844d00b1dd56177a08d2cb',
     'api-icontrol.datadiggers-mr.com': 'https://api-icontrol.datadiggers-mr.com/processfinish?status=1&memberid=DD3F8oMKUaPtJWTFHmBnJ2x2',
+    'jtnpanel.com': 'https://redi.jtnpanel.com/end/CP/Z4aZ2pkpdJo1Ygv',
+    'ubc.ca1.qualtrics.com': 'https://notch.insights.supply/cb?token=3b6be03b-fd47-4918-8306-b9147592daac&RID=',
+    'surveys.psyma.com@samplecube': 'https://surveys.sample-cube.com/ending?RS=1&RID=aa2094cd-306d-449f-a6a0-4d31ac61b7c1&secret=2375',
+    'nw4478.customervoice360.com': 'https://notch.insights.supply/cb?token=f036a864-918d-4134-adde-1e771f6e7c09&RID=',
+    'dectech-research.com': 'https://notch.insights.supply/cb?token=52d777d8-0d18-4521-aa05-48f968f8b950&RID=',
+    'survey7.jdpoweronline.com': 'https://notch.insights.supply/cb?token=dfa0fa33-e309-4f0f-a8f7-4525141d758c&RID=',
+    'https://survey7.jdpoweronline.com@samplecube': 'https://surveys.sample-cube.com/ending?RS=1&RID=xxxxxxxxxcccc&secret=1531',
+    'uk.focusvision.com': 'https://notch.insights.supply/cb?token=893863f5-3820-494e-818b-8e83debecfa4&RID=',
+    'sentry.cloudresearch.com': 'https://notch.insights.supply/cb?token=9865411a-c2d5-45d8-9459-f3f830a2dfae&RID=',
+    'web70.gfk.com@cint': 'https://s.cint.com/Survey/Complete',
+    'srvy.ninja': 'https://notch.insights.supply/cb?RID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&token=abefaac8-c9da-418f-9c6b-8b2eb8305757',
+    'surveys.com': 'https://notch.insights.supply/cb?token=88ddf5b8-2fa9-4556-b3b3-552069b4c08b&RID=',
+    'cobaltskysurveys.com': 'https://notch.insights.supply/cb?token=4b891b7d-92ae-424c-aa22-051fd037fb13&RID=660826f3-f1e2-a4c4-de59-91e92af5df10',
+    'surveys.gazelleglobal.io': 'https://notch.insights.supply/cb?token=8c11ba96-5605-486f-9feb-0021fd40c3b4&RID=',
+    'na.surveys.nielseniq.com': 'https://notch.insights.supply/cb?token=2ce25004-17e6-427a-8706-b5dad133edfe&RID=',
+    'surveys.strat7audiences.com': 'https://notch.insights.supply/cb?token=feea7119-8b04-41f6-979f-8ca2a130ed78&RID=',
+    
+    
     
     
     
