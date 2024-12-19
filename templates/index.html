@@ -4,312 +4,216 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Survey Link Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #ff003c;
-            --secondary-color: #f7b733;
-            --accent-color: #ff4757;
-            --background-dark: #15202b;
-            --background-light: #1e2a37;
-            --text-color: #ffffff;
-            --glass-color: rgba(255, 255, 255, 0.05);
+            --primary: #3b82f6;
+            --secondary: #0ea5e9;
+            --accent: #06b6d4;
+            --background: #1e293b;
+            --card-bg: #334155;
+            --text: #f1f5f9;
+            --input-bg: #0f172a;
+            --success: #10b981;
+            --error: #ef4444;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --highlight: #22d3ee;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: 'JetBrains Mono', monospace;
+            background: radial-gradient(circle, var(--background) 60%, #0f172a);
+            color: var(--text);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, var(--background-dark), var(--background-light));
-            color: var(--text-color);
             overflow: hidden;
+            perspective: 1200px;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .stars span {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: float 5s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-150px); opacity: 0.4; }
         }
 
         .container {
-            background: var(--glass-color);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            border: 2px solid var(--glass-color);
             position: relative;
-            transform-style: preserve-3d;
-            animation: containerFloat 8s ease-in-out infinite;
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px var(--shadow);
+            text-align: center;
+            transform: rotateX(10deg) rotateY(-10deg);
+            animation: floatCard 5s ease-in-out infinite;
         }
 
-        @keyframes containerFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @keyframes floatCard {
+            0%, 100% { transform: rotateX(10deg) rotateY(-10deg) translateY(0); }
+            50% { transform: rotateX(10deg) rotateY(-10deg) translateY(-10px); }
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--highlight));
             -webkit-background-clip: text;
-            background-clip: text;
             color: transparent;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 0px 0px 6px rgba(34, 211, 238, 0.7);
         }
 
-        input[type="text"] {
-            width: 80%;
-            padding: 15px;
-            margin: 20px 0;
-            border: 2px solid var(--glass-color);
-            border-radius: 10px;
-            background-color: var(--glass-color);
-            color: var(--text-color);
+        .input-group {
+            margin-bottom: 2rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid var(--input-bg);
+            background: var(--input-bg);
+            color: var(--text);
             font-size: 1rem;
             transition: all 0.3s ease;
-            box-shadow: inset 4px 4px 6px rgba(0, 0, 0, 0.2),
-                       inset -4px -4px 6px rgba(255, 255, 255, 0.1);
         }
 
-        input[type="text"]:focus {
+        input:focus {
             outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: inset 4px 4px 6px rgba(0, 0, 0, 0.2),
-                       inset -4px -4px 6px var(--secondary-color);
+            border-color: var(--highlight);
+            box-shadow: 0 0 8px var(--highlight);
         }
 
         .generate-btn {
-            padding: 15px 30px;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--text);
+            font-size: 1.1rem;
             border: none;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 1.2rem;
-            font-weight: bold;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2),
-                       -4px -4px 6px rgba(255, 255, 255, 0.1);
-        }
-
-        .generate-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            100% { left: 100%; }
         }
 
         .generate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.2),
-                       -6px -6px 10px rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px rgba(0, 150, 255, 0.3);
         }
 
-        .generate-btn:active {
-            transform: translateY(0);
+        .result-container {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .result, .error {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            display: none; /* Initially hidden */
+        }
+
+        .result {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+        }
+
+        .copy-btn {
+            margin-top: 1rem;
+            padding: 0.75rem 1.2rem;
+            background: var(--highlight);
+            border: none;
+            color: var(--text);
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none; /* Initially hidden */
+        }
+
+        .copy-btn:hover {
+            background: var(--primary);
         }
 
         .loader {
             display: none;
-            margin: 20px auto;
-            position: relative;
-            width: 60px;
-            height: 60px;
-        }
-
-        .loader div {
-            position: absolute;
-            top: 33px;
-            width: 13px;
-            height: 13px;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid var(--primary);
             border-radius: 50%;
-            background: var(--primary-color);
-            animation-timing-function: cubic-bezier(0, 1, 1, 0);
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
         }
 
-        .loader div:nth-child(1) {
-            left: 8px;
-            animation: loader-one 0.6s infinite;
-        }
-
-        .loader div:nth-child(2) {
-            left: 8px;
-            animation: loader-two 0.6s infinite;
-        }
-
-        .loader div:nth-child(3) {
-            left: 32px;
-            animation: loader-two 0.6s infinite;
-        }
-
-        .loader div:nth-child(4) {
-            left: 56px;
-            animation: loader-three 0.6s infinite;
-        }
-
-        @keyframes loader-one {
-            0% {
-                transform: scale(0);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        @keyframes loader-two {
-            0% {
-                transform: scale(1);
-            }
-            100% {
-                transform: scale(0);
-            }
-        }
-
-        @keyframes loader-three {
-            0% {
-                transform: scale(0);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        .success-checkmark {
-            display: none;
-            width: 60px;
-            height: 60px;
-            margin: 20px auto;
-            position: relative;
-        }
-
-        .success-checkmark svg {
-            animation: checkmark 0.5s ease-in-out forwards;
-        }
-
-        @keyframes checkmark {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        .result, .error {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            line-height: 1.5;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .result {
-            background: rgba(76, 175, 80, 0.1);
-            border: 1px solid var(--primary-color);
-        }
-
-        .error {
-            background: rgba(244, 67, 54, 0.1);
-            border: 1px solid var(--accent-color);
-        }
-
-        .result.show, .error.show {
-            opacity: 1;
-        }
-
-        .copy-btn {
-            display: none;
-            padding: 12px 24px;
-            margin-top: 15px;
-            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2),
-                       -4px -4px 6px rgba(255, 255, 255, 0.1);
-        }
-
-        .copy-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.2),
-                       -6px -6px 10px rgba(255, 255, 255, 0.1);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 1.8rem;
-            }
-
-            input[type="text"] {
-                width: 90%;
-                font-size: 0.9rem;
-            }
-
-            .generate-btn {
-                font-size: 1rem;
-                padding: 12px 24px;
-            }
+        @keyframes spin {
+            0% { transform: rotate(0); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
+    <div class="stars">
+        <!-- Generate floating stars dynamically -->
+        <span style="top: 20%; left: 10%; width: 4px; height: 4px;"></span>
+        <span style="top: 50%; left: 30%; width: 2px; height: 2px;"></span>
+        <span style="top: 80%; left: 70%; width: 3px; height: 3px;"></span>
+    </div>
+
     <div class="container">
-        <h1>Survey Link Generator</h1>
-        <input type="text" id="hostName" placeholder="Enter Host Name">
+        <h1>🚀 Generate Survey Link</h1>
+        <div class="input-group">
+            <input type="text" id="hostName" placeholder="Enter Host Name">
+        </div>
         <button class="generate-btn" onclick="generateLink()">Generate Link</button>
-
-        <div id="loader" class="loader">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+        <div class="result-container">
+            <div class="loader" id="loader"></div>
+            <div id="result" class="result"></div>
+            <div id="error" class="error"></div>
+            <button id="copyBtn" class="copy-btn" onclick="copyToClipboard()">Copy Link</button>
         </div>
-
-        <div id="successCheckmark" class="success-checkmark">
-            <svg width="60" height="60" viewBox="0 0 60 60">
-                <circle cx="30" cy="30" r="25" fill="none" stroke="#4CAF50" stroke-width="3"/>
-                <path d="M20 30L27 37L40 24" fill="none" stroke="#4CAF50" stroke-width="3"/>
-            </svg>
-        </div>
-
-        <div id="successMessage" class="result"></div>
-        <div id="errorMessage" class="error"></div>
-        <button id="copyBtn" class="copy-btn" onclick="copyToClipboard()">Copy to Clipboard</button>
     </div>
 
     <script>
         function generateLink() {
             const loader = document.getElementById('loader');
-            const successMessage = document.getElementById('successMessage');
-            const errorMessage = document.getElementById('errorMessage');
+            const result = document.getElementById('result');
+            const error = document.getElementById('error');
             const copyBtn = document.getElementById('copyBtn');
-            const successCheckmark = document.getElementById('successCheckmark');
             const hostName = document.getElementById('hostName').value;
 
             // Reset displays
             loader.style.display = 'block';
-            successMessage.style.display = 'none';
-            errorMessage.style.display = 'none';
+            result.style.display = 'none';
+            error.style.display = 'none';
             copyBtn.style.display = 'none';
-            successCheckmark.style.display = 'none';
 
             const currentDomain = window.location.origin;
 
@@ -329,33 +233,21 @@
                     loader.style.display = 'none';
 
                     if (data.success) {
-                        successCheckmark.style.display = 'block';
-                        playSuccessSound();
-                        showConfetti();
-
-                        setTimeout(() => {
-                            successCheckmark.style.display = 'none';
-                            successMessage.style.display = 'block';
-                            successMessage.textContent = 'Generated Link: ' + data.link;
-                            successMessage.classList.add('show');
-                            copyBtn.style.display = 'block';
-                            copyBtn.dataset.link = data.link;
-                        }, 1000);
+                        result.style.display = 'block';
+                        result.textContent = `Generated Link: ${data.link}`;
+                        copyBtn.style.display = 'block';
+                        copyBtn.dataset.link = data.link;
                     } else {
-                        errorMessage.style.display = 'block';
-                        errorMessage.textContent = data.error;
-                        errorMessage.classList.add('show');
-                        playErrorSound();
+                        error.style.display = 'block';
+                        error.textContent = data.error;
                     }
-                }, 2000);
+                }, 1500);
             })
-            .catch(error => {
+            .catch(err => {
                 loader.style.display = 'none';
-                errorMessage.style.display = 'block';
-                errorMessage.textContent = 'Error: Could not generate link. Please try again.';
-                errorMessage.classList.add('show');
-                playErrorSound();
-                console.error('Error:', error);
+                error.style.display = 'block';
+                error.textContent = 'Error: Could not generate link. Please try again.';
+                console.error('Error:', err);
             });
         }
 
@@ -365,88 +257,16 @@
 
             navigator.clipboard.writeText(link).then(() => {
                 const originalText = copyBtn.textContent;
-                const originalBackground = copyBtn.style.background;
-
-                copyBtn.textContent = 'Copied!';
-                copyBtn.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
+                copyBtn.textContent = 'Copied! ✓';
+                copyBtn.style.background = 'linear-gradient(45deg, #22c55e, #16a34a)';
 
                 setTimeout(() => {
                     copyBtn.textContent = originalText;
-                    copyBtn.style.background = originalBackground;
+                    copyBtn.style.background = 'var(--highlight)';
                 }, 2000);
             }).catch(err => {
-                alert('Error copying link: ' + err);
+                console.error('Failed to copy:', err);
             });
-        }
-
-        function playSuccessSound() {
-            const audio = new Audio('https://www.soundjay.com/button/sounds/beep-07.mp3');
-            audio.play();
-        }
-
-        function playErrorSound() {
-            const audio = new Audio('https://www.soundjay.com/button/sounds/beep-06.mp3');
-            audio.play();
-        }
-
-        function showConfetti() {
-            const confetti = document.createElement('div');
-            confetti.style.position = 'fixed';
-            confetti.style.top = '0';
-            confetti.style.left = '0';
-            confetti.style.width = '100%';
-            confetti.style.height = '100%';
-            confetti.style.zIndex = '9999';
-            confetti.style.pointerEvents = 'none';
-            document.body.appendChild(confetti);
-
-            const confettiCanvas = document.createElement('canvas');
-            confettiCanvas.style.width = '100%';
-            confettiCanvas.style.height = '100%';
-            confetti.appendChild(confettiCanvas);
-
-            const confettiCtx = confettiCanvas.getContext('2d');
-            confettiCtx.fillStyle = '#4CAF50';
-
-            const confettiCount = 100;
-            const confettiArray = [];
-
-            for (let i = 0; i < confettiCount; i++) {
-                const confetti = {
-                    x: Math.random() * window.innerWidth,
-                    y: Math.random() * window.innerHeight,
-                    size: Math.random() * 5 + 2,
-                    speedX: Math.random() * 4 - 2,
-                    speedY: Math.random() * 2 + 1,
-                };
-                confettiArray.push(confetti);
-            }
-
-            function drawConfetti() {
-                confettiCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
-                confettiArray.forEach((confetti, index) => {
-                    confetti.x += confetti.speedX;
-                    confetti.y += confetti.speedY;
-
-                    if (confetti.y > window.innerHeight) {
-                        confetti.y = 0;
-                        confetti.x = Math.random() * window.innerWidth;
-                    }
-
-                    confettiCtx.beginPath();
-                    confettiCtx.arc(confetti.x, confetti.y, confetti.size, 0, Math.PI * 2);
-                    confettiCtx.fill();
-                });
-
-                requestAnimationFrame(drawConfetti);
-            }
-
-            drawConfetti();
-
-            setTimeout(() => {
-                document.body.removeChild(confetti);
-            }, 3000);
         }
     </script>
 </body>
